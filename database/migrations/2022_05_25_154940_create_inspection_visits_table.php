@@ -22,7 +22,7 @@ return new class extends Migration
             $table->ForeignIdFor(Land::class, 'land_id')->nullable();
             $table->date('inspection_date');
             $table->string('inspection_time');
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 
