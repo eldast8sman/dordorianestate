@@ -16,7 +16,20 @@ class LandController extends Controller
      */
     public function index()
     {
-        
+        $lands = Land::orderBy('created', 'DESC');
+        if($lands->count() > 0){
+            return response([
+                'status' => 'success',
+                'message' => 'Lands found successfully',
+                'data' => $lands->get()
+            ], 200);
+        } else {
+            return response([
+                'status' => 'failed',
+                'message' => 'No Land found',
+                'data' => []
+            ], 404);
+        }
     }
 
     /**
@@ -26,7 +39,7 @@ class LandController extends Controller
      */
     public function create()
     {
-        return LandResource::collection(Land::orderBy('created_at', 'DESC'));
+        
     }
 
     /**
@@ -38,7 +51,18 @@ class LandController extends Controller
     public function store(StoreLandRequest $request)
     {
         $land = Land::create($request->all());
-        return new LandResource($land);
+        if($land){
+            return response([
+                'status' => 'success',
+                'message' => 'Land Created successfully',
+                'data' => $land
+            ], 200);
+        } else {
+            return response([
+                'status' => 'failed',
+                'message' => 'Error in Land Creation'
+            ], 500);
+        }
     }
 
     /**
@@ -49,14 +73,36 @@ class LandController extends Controller
      */
     public function show(Land $land, $id)
     {
-        $land = Land::find($id);
-        return new LandResource($land);
+        $land = Land::where('id', $id)->first();
+        if(!empty($land)){
+            return response([
+                'status' => 'success',
+                'message' => 'Land found successfully',
+                'data' => $land
+            ], 200);
+        } else {
+            return response([
+                'status' => 'failed',
+                'message' => 'Land Not Found'
+            ], 404);
+        }
     }
 
     public function bySlug(Land $land, $slug)
     {
         $land = Land::where('slug', $slug)->first();
-        return new LandResource($land);
+        if(!empty($land)){
+            return response([
+                'status' => 'success',
+                'message' => 'Land found successfully',
+                'data' => $land
+            ], 200);
+        } else {
+            return response([
+                'status' => 'failed',
+                'message' => 'Land Not Found'
+            ], 404);
+        }
     }
 
     /**
@@ -81,10 +127,23 @@ class LandController extends Controller
     {
         $land = Land::find_id($id);
         if($land){
-            $land->update($request->all());
-            return new LandResource($land);
+            if($land->update($request->all())){
+                return response([
+                    'status' => 'success',
+                    'message' => 'Land updated successfully',
+                    'data' => $land
+                ], 200);
+            } else {
+                return response([
+                    'status' => 'failed',
+                    'message' => 'Land Update failed'
+                ], 500);
+            }
         } else {
-            return response('Land Not found', 404);
+            return response([
+                'status' => 'failed',
+                'message' => 'Land Not found'
+            ], 404);
         }
     }
 
@@ -98,10 +157,23 @@ class LandController extends Controller
     {
         $land = Land::find($id);
         if($land){
-            $land->delete();
-            return new LandResource($land);
+            if($land->delete()){
+                return response([
+                    'status' => 'success',
+                    'message' => 'Land Delete Successful',
+                    'data' => $land
+                ]);
+            } else {
+                return response([
+                    'status' => 'failed',
+                    'message' => 'Land Delete failed'
+                ], 500);
+            }
         } else {
-            return response("Land Not Found", 404);
+            return response([
+                'status' => 'failed',
+                'message' => 'No Land was found'
+            ], 404);
         }
     }
 }
