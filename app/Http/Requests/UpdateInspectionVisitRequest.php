@@ -13,7 +13,7 @@ class UpdateInspectionVisitRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class UpdateInspectionVisitRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:500',
+            'phone' => 'required|string|max:20',
+            'email' => 'string|max:500',
+            'land_id' => 'required|integer|exists:\App\Models\Land,id',
+            'inspection_date' => 'required|string',
+            'inspection_time' => 'required|string'
         ];
     }
 }

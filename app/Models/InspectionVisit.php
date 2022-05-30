@@ -11,4 +11,8 @@ class InspectionVisit extends Model
 
     protected $fillable = ['name', 'phone', 'email', 'land_id', 'inspection_date', 'inspection_time'];
 
+    public function land(){
+        return $this->belongsTo(Land::class);
+    }
+
 }

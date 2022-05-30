@@ -19,4 +19,8 @@ class Land extends Model
             ->generateSlugsFrom(['state', 'lga', 'area'])
             ->saveSlugsTo('slug');
     }
+
+    public function inspectionVisits(){
+        return $this->hasMany(InspectionVisit::class);
+    }
 }
