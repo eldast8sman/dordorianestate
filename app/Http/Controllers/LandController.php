@@ -75,6 +75,7 @@ class LandController extends Controller
     {
         $land = Land::where('id', $id)->first();
         if(!empty($land)){
+            $land->videos = $land->landVideos();
             return response([
                 'status' => 'success',
                 'message' => 'Land found successfully',
@@ -92,6 +93,7 @@ class LandController extends Controller
     {
         $land = Land::where('slug', $slug)->first();
         if(!empty($land)){
+            $land->videos = $land->landVideos();
             return response([
                 'status' => 'success',
                 'message' => 'Land found successfully',

@@ -23,4 +23,8 @@ class Land extends Model
     public function inspectionVisits(){
         return $this->hasMany(InspectionVisit::class);
     }
+
+    public function landVideos(){
+        return $this->hasMany(LandVideo::class);
+    }
 }
