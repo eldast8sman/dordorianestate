@@ -30,7 +30,8 @@ class UpdateLandRequest extends FormRequest
             'description' => 'required|string',
             'size' => 'required|string',
             'available_plots' => 'required|integer',
-            'price' => 'required|numeric'
+            'price' => 'required|numeric',
+            'filepath' => 'mimes:jpg,jpeg,png,gif|max:500'
         ];
     }
 }
