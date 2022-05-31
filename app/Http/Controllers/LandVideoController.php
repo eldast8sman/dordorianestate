@@ -53,6 +53,8 @@ class LandVideoController extends Controller
      */
     public function store(StoreLandVideoRequest $request)
     {
+        $all = $request->all();
+        $all['output_link'] = $this->output_link($all['platform'], $all['link']);
         $video =  LandVideo::create($request->all());
         if($video){
             return response([
@@ -149,5 +151,16 @@ class LandVideoController extends Controller
                 'message' => 'Land Video delete failed'
             ], 500);
         }
+    }
+
+    public function output_link($platform, $link){
+        $platform = strtolower($platform);
+        if($platform == "youtube"){
+            $extract = substr($link, 17);
+            $output = "https://youtube.com/embed/".$extract;
+        } else {
+            $output = "";
+        }
+        return $output;
     }
 }

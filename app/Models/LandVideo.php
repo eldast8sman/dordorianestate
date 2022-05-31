@@ -9,7 +9,7 @@ class LandVideo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['land_id', 'platform', 'caption', 'link'];
+    protected $fillable = ['land_id', 'platform', 'caption', 'link', 'output_link'];
 
     public function land(){
         return $this->belongsTo(Land::class);

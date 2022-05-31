@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('platform', 500);
             $table->string('caption', 255);
             $table->string('link', 1000);
+            $table->string('output_link', 1000);
             $table->timestamps();
         });
     }

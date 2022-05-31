@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandController;
+use App\Http\Controllers\LandVideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ Route::post('/lands', [LandController::class, 'store']);
 Route::get('/lands/{id}', [LandController::class, 'show']);
 Route::get('/lands/by-slug/{slug}', [LandController::class, 'bySlug']);
 Route::put('/lands/{id}', [LandController::class, 'update']);
-Route::delete('/lands/{id}', [LandController::class, 'delete']);
+Route::delete('/lands/{id}', [LandController::class, 'destroy']);
 Route::post('/land-inspections', [InspectionVisitController::class, 'store']);
 Route::get('/upcoming-inspetions', [InspectionVisitController::class, 'index']);
 Route::get('/previous-inspections', [InspectionVisitController::class, 'previousInspections']);
@@ -32,4 +33,9 @@ Route::get('/land-upcoming-inspections/{land_id}', [InspectionVisitController::c
 Route::get('/land-previous-inspections/{land_id}', [InspectionVisitController::class, 'previousByLand']);
 Route::get('/land-inspections/{id}', [InspectionVisitController::class, 'show']);
 Route::put('/land-inspections/{id}', [InspectionVisitController::class, 'update']);
-Route::delete('/land-inspections/{id}', [InspectionVisitController::class, 'delete']);
+Route::delete('/land-inspections/{id}', [InspectionVisitController::class, 'destroy']);
+Route::post('/land-videos', [LandVideoController::class, 'store']);
+Route::get('/land-videos/by-land/{land_id}', [LandVideoController::class, 'byLand']);
+Route::get('/land-videos/{id}', [LandVideoController::class, 'show']);
+Route::put('/land-videos/{id}', [LandVideoController::class, 'update']);
+Route::delete('/land-videos/{id}', [LandVideoController::class, 'destroy']);
