@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('size');
             $table->integer('available_plots');
             $table->double('price');
+            $table->string('filepath', 255);
 ;           $table->timestamps();
         });
     }

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Land;
+use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
 use App\Http\Resources\LandResource;
+use Illuminate\Support\Facades\File;
 use App\Http\Requests\StoreLandRequest;
 use App\Http\Requests\UpdateLandRequest;
 
@@ -16,12 +19,16 @@ class LandController extends Controller
      */
     public function index()
     {
-        $lands = Land::orderBy('created', 'DESC');
-        if($lands->count() > 0){
+        $lands = Land::orderBy('created', 'DESC')->get();
+        if(!empty($lands)){
+            foreach($lands as $land){
+                $land->filepath = url($land->filepath);
+                $land->videos = $land->videos();
+            }
             return response([
                 'status' => 'success',
                 'message' => 'Lands found successfully',
-                'data' => $lands->get()
+                'data' => $lands
             ], 200);
         } else {
             return response([
@@ -50,8 +57,19 @@ class LandController extends Controller
      */
     public function store(StoreLandRequest $request)
     {
-        $land = Land::create($request->all());
+        $all = $request->all();
+        $image = $all['filepath'];
+        unset($all['filepath']);
+        if($image instanceof UploadedFile){
+            $filename = Str::random().time();
+            $extension = $image->getClientOriginalExtension();
+            $filepath = $filename.".".$extension;
+            $image->move(public_path('img'), $filepath);
+            $all['filepath'] = 'img/'.$filepath;
+        }
+        $land = Land::create($all);
         if($land){
+            $land->filepath = url($land->filepath);
             return response([
                 'status' => 'success',
                 'message' => 'Land Created successfully',
@@ -94,6 +112,7 @@ class LandController extends Controller
         $land = Land::where('slug', $slug)->first();
         if(!empty($land)){
             $land->videos = $land->landVideos();
+            $land->filepath = url($land->filepath);
             return response([
                 'status' => 'success',
                 'message' => 'Land found successfully',
@@ -127,9 +146,27 @@ class LandController extends Controller
      */
     public function update(UpdateLandRequest $request, $id)
     {
-        $land = Land::find_id($id);
+        $land = Land::find($id);
         if($land){
-            if($land->update($request->all())){
+            $all = $request->all();
+            if(!empty($all['filepath'])){
+                $image = $all['filepath'];
+                unset($all['filepath']);
+                if($image instanceof UploadedFile){
+                    if(File::exists($land->filepath)){
+                        File::delete($land->filepath);
+                    }
+                    $filename = Str::random().time();
+                    $extension = $image->getClientOriginalExtension();
+                    $filepath = $filename.".".$extension;
+                    $image->move(public_path('img'), $filepath);
+                    $all['filepath'] = 'img/'.$filepath;
+                }
+            } else {
+                unset($all['filepath']);
+            }
+            if($land->update($all)){
+                $land->filepath = url($land->filepath);
                 return response([
                     'status' => 'success',
                     'message' => 'Land updated successfully',
@@ -160,6 +197,15 @@ class LandController extends Controller
         $land = Land::find($id);
         if($land){
             if($land->delete()){
+                if(File::exists($land->filepath)){
+                    File::delete($land->filepath);
+                }
+                $videos = $land->videos();
+                if(!empty($videos)){
+                    foreach($videos as $video){
+                        $video->delete();
+                    }
+                }
                 return response([
                     'status' => 'success',
                     'message' => 'Land Delete Successful',

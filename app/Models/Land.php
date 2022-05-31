@@ -11,7 +11,7 @@ class Land extends Model
 {
     use HasFactory, HasSlug;
 
-    protected $fillable = ['slug', 'state', 'lga', 'area', 'description', 'facilities', 'size', 'available_plots', 'price'];
+    protected $fillable = ['slug', 'state', 'lga', 'area', 'description', 'facilities', 'size', 'available_plots', 'price', 'filepath'];
 
     public function getSlugOptions(): SlugOptions
     {
