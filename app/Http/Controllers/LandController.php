@@ -32,6 +32,7 @@ class LandController extends Controller
                     }
                 }
                 $land->photos = $photos;
+                $land->installments = $land->installments();
             }
             return response([
                 'status' => 'success',
@@ -110,6 +111,7 @@ class LandController extends Controller
                     $photo->compressed = url($photo->compressed);
                 }
             }
+            $land->installments = $land->installments();
             $land->photos = $photos;
             return response([
                 'status' => 'success',
@@ -138,6 +140,7 @@ class LandController extends Controller
                 }
             }
             $land->photos = $photos;
+            $land->installments = $land->installments();
             return response([
                 'status' => 'success',
                 'message' => 'Land found successfully',

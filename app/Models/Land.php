@@ -31,4 +31,8 @@ class Land extends Model
     public function landPhotos(){
         return $this->hasMany(LandPhoto::class);
     }
+
+    public function installments(){
+        return $this->hasMany(LandInstallment::class);
+    }
 }

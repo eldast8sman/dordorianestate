@@ -44,3 +44,8 @@ Route::get('/land-photos/by-land/{land_id}', [LandPhotoController::class, 'byLan
 Route::get('/land-photos/{id}', [LandPhotoController::class, 'show']);
 Route::put('/land-photos/{id}', [LandPhotoController::class, 'update']);
 Route::delete('/land-photos/{id}', [LandPhotoController::class, 'destroy']);
+Route::post('/land-installments', [LandInstallmentController::class, 'store']);
+Route::get('/land-installments/by-land/{land_id}', [LandInstallmentController::class, 'byLand']);
+Route::get('/land-installments/{id}', [LandInstallmentController::class, 'show']);
+Route::put('/land-installments/{id}', [LandInstallmentController::class, 'update']);
+Route::delete('/land-installments/{id}', [LandInstallmentController::class, 'destroy']);
