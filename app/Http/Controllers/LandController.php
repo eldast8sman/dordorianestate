@@ -24,6 +24,14 @@ class LandController extends Controller
             foreach($lands as $land){
                 $land->filepath = url($land->filepath);
                 $land->videos = $land->videos();
+                $photos = $land->landPhotos();
+                if(!empty($photos)){
+                    foreach($photos as $photo){
+                        $photo->filepath = url($photo->filepath);
+                        $photo->compressed = url($photo->compressed);
+                    }
+                }
+                $land->photos = $photos;
             }
             return response([
                 'status' => 'success',
@@ -94,6 +102,15 @@ class LandController extends Controller
         $land = Land::where('id', $id)->first();
         if(!empty($land)){
             $land->videos = $land->landVideos();
+            $land->filepath = url($land->filepath);
+            $photos = $land->landPhotos();
+            if(!empty($photos)){
+                foreach($photos as $photo){
+                    $photo->filepath = url($photo->filepath);
+                    $photo->compressed = url($photo->compressed);
+                }
+            }
+            $land->photos = $photos;
             return response([
                 'status' => 'success',
                 'message' => 'Land found successfully',
@@ -113,6 +130,14 @@ class LandController extends Controller
         if(!empty($land)){
             $land->videos = $land->landVideos();
             $land->filepath = url($land->filepath);
+            $photos = $land->landPhotos();
+            if(!empty($photos)){
+                foreach($photos as $photo){
+                    $photo->filepath = url($photo->filepath);
+                    $photo->compressed = url($photo->compressed);
+                }
+            }
+            $land->photos = $photos;
             return response([
                 'status' => 'success',
                 'message' => 'Land found successfully',
