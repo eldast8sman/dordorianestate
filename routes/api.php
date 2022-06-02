@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\LandController;
 use App\Http\Controllers\LandVideoController;
 
@@ -24,7 +25,7 @@ Route::get('/lands', [LandController::class, 'index']);
 Route::post('/lands', [LandController::class, 'store']);
 Route::get('/lands/{id}', [LandController::class, 'show']);
 Route::get('/lands/by-slug/{slug}', [LandController::class, 'bySlug']);
-Route::put('/lands/{id}', [LandController::class, 'update']);
+Route::post('/lands/{id}', [LandController::class, 'update']);
 Route::delete('/lands/{id}', [LandController::class, 'destroy']);
 Route::post('/land-inspections', [InspectionVisitController::class, 'store']);
 Route::get('/upcoming-inspetions', [InspectionVisitController::class, 'index']);
@@ -42,10 +43,15 @@ Route::delete('/land-videos/{id}', [LandVideoController::class, 'destroy']);
 Route::post('/land-photos', [LandPhotoController::class, 'store']);
 Route::get('/land-photos/by-land/{land_id}', [LandPhotoController::class, 'byLand']);
 Route::get('/land-photos/{id}', [LandPhotoController::class, 'show']);
-Route::put('/land-photos/{id}', [LandPhotoController::class, 'update']);
+Route::post('/land-photos/{id}', [LandPhotoController::class, 'update']);
 Route::delete('/land-photos/{id}', [LandPhotoController::class, 'destroy']);
 Route::post('/land-installments', [LandInstallmentController::class, 'store']);
 Route::get('/land-installments/by-land/{land_id}', [LandInstallmentController::class, 'byLand']);
 Route::get('/land-installments/{id}', [LandInstallmentController::class, 'show']);
 Route::put('/land-installments/{id}', [LandInstallmentController::class, 'update']);
 Route::delete('/land-installments/{id}', [LandInstallmentController::class, 'destroy']);
+Route::post('/blogs', [BlogController::class, 'store']);
+Route::get('/blogs', [BlogController::class, 'index']);
+Route::get('/blog/{id}', [BlogController::class, 'show']);
+Route::post('/blog/{id}', [BlogController::class, 'update']);
+Route::delete('/blog/{id}', [BlogController::class, 'destroy']);
