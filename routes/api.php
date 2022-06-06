@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\LandController;
 use App\Http\Controllers\LandVideoController;
+use App\Http\Controllers\InspectionVisitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,7 @@ Route::get('/lands/by-slug/{slug}', [LandController::class, 'bySlug']);
 Route::post('/lands/{id}', [LandController::class, 'update']);
 Route::delete('/lands/{id}', [LandController::class, 'destroy']);
 Route::post('/land-inspections', [InspectionVisitController::class, 'store']);
-Route::get('/upcoming-inspetions', [InspectionVisitController::class, 'index']);
+Route::get('/upcoming-inspections', [InspectionVisitController::class, 'index']);
 Route::get('/previous-inspections', [InspectionVisitController::class, 'previousInspections']);
 Route::get('/land-upcoming-inspections/{land_id}', [InspectionVisitController::class, 'upcomingByLand']);
 Route::get('/land-previous-inspections/{land_id}', [InspectionVisitController::class, 'previousByLand']);

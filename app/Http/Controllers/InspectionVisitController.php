@@ -7,7 +7,7 @@ use App\Models\InspectionVisit;
 use App\Http\Requests\StoreInspectionVisitRequest;
 use App\Http\Requests\UpdateInspectionVisitRequest;
 
-class InpectionVisitController extends Controller
+class InspectionVisitController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -64,7 +64,7 @@ class InpectionVisitController extends Controller
         ->orderBy('inspection_date', 'asc')
         ->orderBy('inspection_time', 'asc')
         ->orderBy('created_at', 'asc');
-        if($visits->count){
+        if($visits->count() > 0){
             return response([
                 'status' => 'success',
                 'message' => 'Upcoming Inspections fetched successfully',
@@ -86,7 +86,7 @@ class InpectionVisitController extends Controller
         ->orderBy('inspection_date', 'desc')
         ->orderBy('inspection_time', 'desc')
         ->orderBy('created_at', 'desc');
-        if($visits->count){
+        if($visits->count() > 0){
             return response([
                 'status' => 'success',
                 'message' => 'Previous Inspections fetched successfully',
@@ -209,7 +209,11 @@ class InpectionVisitController extends Controller
     {
         $visit = InspectionVisit::find($id);
         if($visit->delete()){
-
+            return response([
+                'status' => 'success',
+                'message' => 'Inspection Visit deleted successfully',
+                'data' => $visit
+            ], 200);
         } else {
             return response([
                 'status' => 'failed',

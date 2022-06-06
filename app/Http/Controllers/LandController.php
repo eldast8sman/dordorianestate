@@ -19,11 +19,11 @@ class LandController extends Controller
      */
     public function index()
     {
-        $lands = Land::orderBy('created', 'DESC')->get();
+        $lands = Land::orderBy('created_at', 'DESC')->get();
         if(!empty($lands)){
             foreach($lands as $land){
                 $land->filepath = url($land->filepath);
-                $land->videos = $land->videos();
+                $land->videos = $land->landVideos();
                 $photos = $land->landPhotos();
                 if(!empty($photos)){
                     foreach($photos as $photo){
@@ -228,10 +228,34 @@ class LandController extends Controller
                 if(File::exists($land->filepath)){
                     File::delete($land->filepath);
                 }
-                $videos = $land->videos();
+                $videos = $land->landVideos();
                 if(!empty($videos)){
                     foreach($videos as $video){
                         $video->delete();
+                    }
+                }
+                $visits = $land->inspectionVisits();
+                if(!empty($visits)){
+                    foreach($visits as $visit){
+                        $visit->delete();
+                    }
+                }
+                $photos = $land->landPhotos();
+                if(!empty($photos)){
+                    foreach($photos as $photo){
+                        $photo->delete();
+                        if(File::exists($photo->filepath)){
+                            File::delete($photo->filepath);
+                        }
+                        if(File::exists($photo->compressed)){
+                            File::delete($photo->compressed);
+                        }
+                    }
+                }
+                $installments = $land->installments();
+                if(!empty($installments)){
+                    foreach($installments as $installment){
+                        $installment->delete();
                     }
                 }
                 return response([
