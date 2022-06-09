@@ -24,7 +24,7 @@ class StoreLandVideoRequest extends FormRequest
     public function rules()
     {
         return [
-            'land_id' => 'required|integer|exists:\App\Models\Land, id',
+            'land_id' => 'required|integer|exists:\App\Models\Land,id',
             'platform' => 'required|string',
             'caption' => 'string',
             'link' => 'required|string'

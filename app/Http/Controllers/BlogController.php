@@ -63,8 +63,8 @@ class BlogController extends Controller
             unset($all['filepath']);
             if($image instanceof UploadedFile){
                 $filename = Str::random().time();
-                $extension = $image->getOriginalExtension();
-                $filepath = $filename.$extension;
+                $extension = $image->getClientOriginalExtension();
+                $filepath = $filename.'.'.$extension;
                 $image->move(public_path('img'), $filepath);
                 $all['filepath'] = 'img/'.$filepath;
                 $Image = Image::make($all['filepath']);
@@ -140,7 +140,7 @@ class BlogController extends Controller
     public function update(UpdateBlogRequest $request, $id)
     {
         $blog = Blog::find($id);
-        if(!empty($$blog)){
+        if(!empty($blog)){
             $all = $request->all();
             if(!empty($all['filepath'])){
                 $image = $all['filepath'];

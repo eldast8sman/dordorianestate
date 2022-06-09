@@ -24,8 +24,8 @@ class StoreLandPhotoRequest extends FormRequest
     public function rules()
     {
         return [
-            'land_id' => 'required|integer|exists:\App\Models\Land, id',
-            'filepath' => 'required|string|mimes:jpg,jpeg,png,gif|max:500',
+            'land_id' => 'required|integer|exists:\App\Models\Land,id',
+            'filepath' => 'required|mimes:jpg,jpeg,png,gif|max:500',
             'caption' => 'string'
         ];
     }

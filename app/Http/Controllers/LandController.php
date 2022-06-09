@@ -102,16 +102,16 @@ class LandController extends Controller
     {
         $land = Land::where('id', $id)->first();
         if(!empty($land)){
-            $land->videos = $land->landVideos();
+            $land->videos = $land->landVideos()->get();
             $land->filepath = url($land->filepath);
-            $photos = $land->landPhotos();
+            $photos = $land->landPhotos()->get();
             if(!empty($photos)){
                 foreach($photos as $photo){
                     $photo->filepath = url($photo->filepath);
                     $photo->compressed = url($photo->compressed);
                 }
             }
-            $land->installments = $land->installments();
+            $land->installments = $land->installments()->get();
             $land->photos = $photos;
             return response([
                 'status' => 'success',
@@ -130,9 +130,9 @@ class LandController extends Controller
     {
         $land = Land::where('slug', $slug)->first();
         if(!empty($land)){
-            $land->videos = $land->landVideos();
+            $land->videos = $land->landVideos()->get();
             $land->filepath = url($land->filepath);
-            $photos = $land->landPhotos();
+            $photos = $land->landPhotos()->get();
             if(!empty($photos)){
                 foreach($photos as $photo){
                     $photo->filepath = url($photo->filepath);
@@ -140,7 +140,7 @@ class LandController extends Controller
                 }
             }
             $land->photos = $photos;
-            $land->installments = $land->installments();
+            $land->installments = $land->installments()->get();
             return response([
                 'status' => 'success',
                 'message' => 'Land found successfully',

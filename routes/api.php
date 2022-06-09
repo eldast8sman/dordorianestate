@@ -4,8 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\LandController;
+use App\Http\Controllers\LandPhotoController;
 use App\Http\Controllers\LandVideoController;
 use App\Http\Controllers\InspectionVisitController;
+use App\Http\Controllers\LandInstallmentController;
 
 /*
 |--------------------------------------------------------------------------

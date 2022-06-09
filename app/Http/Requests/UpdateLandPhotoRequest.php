@@ -24,7 +24,8 @@ class UpdateLandPhotoRequest extends FormRequest
     public function rules()
     {
         return [
-            'filepath' => 'string|mimes:jpg,jpeg,png,gif|max:500',
+            'land_id' => 'integer|exists:\App\Models\Land,id',
+            'filepath' => 'mimes:jpg,jpeg,png,gif|max:500',
             'caption' => 'string'
         ];
     }

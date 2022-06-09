@@ -19,17 +19,17 @@ class LandVideoController extends Controller
     }
 
     public function byLand($land_id){
-        $videos = LandVideo::where('land_id', $land_id)->orderBy('created_at', 'asc')->get();
-        if(!empty($videos)){
+        $videos = LandVideo::where('land_id', $land_id)->orderBy('created_at', 'asc');
+        if($videos->count() > 0){
             return response([
                 'status' => 'success',
                 'message' => 'Videos fetched successfully',
-                'data' => $videos
+                'data' => $videos->get()
             ], 200);
         } else {
             return response([
                 'status' => 'failed',
-                'message' => 'No Video was fetched for thia land',
+                'message' => 'No Video was fetched for this land',
                 'data' => []
             ], 404);
         }
@@ -55,7 +55,7 @@ class LandVideoController extends Controller
     {
         $all = $request->all();
         $all['output_link'] = $this->output_link($all['platform'], $all['link']);
-        $video =  LandVideo::create($request->all());
+        $video =  LandVideo::create($all);
         if($video){
             return response([
                 'status' => 'success',
@@ -116,7 +116,11 @@ class LandVideoController extends Controller
     public function update(UpdateLandVideoRequest $request, $id)
     {
         $video = LandVideo::find($id);
-        if($video->update($request->all())){
+        $all = $request->all();
+        if(!empty($all['link'])){
+            $all['output_link'] = $this->output_link($all['platform'], $all['link']);
+        }
+        if($video->update($all)){
             return response([
                 'status' => 'success',
                 'message' => 'Land Video updated successfully',
