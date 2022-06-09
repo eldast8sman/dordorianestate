@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function index(){
+        $users = User::orderBy('created_at', 'desc')->get();
+        return response($users, 200);
+    }
+    
     public function register(Request $request){
         $data = $request->validate([
             'name' => 'required|string',
